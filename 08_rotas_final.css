@@ -1,0 +1,45 @@
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090C10;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #21262D;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFD600;
+}
+
+.time-chip {
+  background-color: #161B22;
+  color: #E6EDF3;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #30363D;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.time-chip:hover {
+  border-color: #FFD600;
+  color: #FFD600;
+  transform: translateY(-1px);
+}
+
+.schedule-panel {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.route-filter-btn {
+  transition: all 0.2s ease;
+}

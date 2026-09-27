@@ -1,0 +1,15 @@
+/* DESEMPENHO E INTERAÇÕES TOUCH */
+.pet-btn, .acc-btn {
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.pet-btn:active, .acc-btn:active {
+  transform: scale(0.95);
+}
+
+/* RENDERING LIMPO PARA VETORES SVG */
+#mascotSvgLayer svg {
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+}

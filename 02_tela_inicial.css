@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --brand-yellow: #FFD600;
+  --bg-dark: #090C10;
+  --card-dark: #0D1117;
+  --border-dark: #1F2937;
+}
+
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-dark);
+  color: #FFFFFF;
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scrollbar Personalizada */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark); 
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-yellow); 
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.event-card {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.event-card:hover {
+  box-shadow: 0 10px 20px -5px rgba(255, 214, 0, 0.15);
+}
+
+.event-card.hidden {
+  display: none !important;
+}
+
+@media (max-width: 360px) {
+  header {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  #cityContainer {
+    display: none;
+  }
+}

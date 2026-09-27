@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUS WORK - Tela Inicial</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Estilos CSS Personalizados -->
+  <link rel="stylesheet" href="02_tela_inicial.css">
+</head>
+<body class="min-h-screen flex flex-col bg-[#090C10] text-white relative">
+
+  <!-- FAIXA SUPERIOR / CABEÇALHO PADRONIZADO -->
+  <header class="bg-[#FFD600] text-black px-3 lg:px-6 py-2.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+    
+    <!-- ESQUERDA: Botão Hambúrguer + Logo + Perfil -->
+    <div class="flex items-center space-x-2 sm:space-x-4">
+      <button id="openMenuBtn" type="button" class="p-1.5 hover:bg-black/10 rounded-lg focus:outline-none transition cursor-pointer" aria-label="Abrir Menu">
+        <svg class="w-7 h-7 text-black" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- LOGO OFICIAL BUS WORK -->
+      <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0" aria-label="BUS WORK Home">
+        <svg class="h-8 sm:h-10 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="bus-icon">
+            <rect x="2" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="83" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="8" y="10" width="76" height="76" rx="16" fill="#121212"/>
+            <rect x="18" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="60" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="32" y="18" width="28" height="5" rx="2" fill="#FFD600"/>
+            <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#FFD600"/>
+            <circle cx="26" cy="68" r="6" fill="#FFD600"/>
+            <circle cx="66" cy="68" r="6" fill="#FFD600"/>
+            <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#FFD600"/>
+          </g>
+          <g id="bus-text" fill="#121212">
+            <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+            <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+            <path d="M 112 80 L 122 61 L 129 63 L 118 82 Z" fill="#FFD600"/>
+          </g>
+        </svg>
+      </a>
+
+      <!-- PERFIL DO USUÁRIO -->
+      <a href="03_tela_de_edicao_dados.html" class="flex items-center space-x-2 border-l border-black/20 pl-2 sm:pl-4 hover:opacity-80 transition" title="Editar Perfil">
+        <div id="userAvatarContainer" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-black bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+          <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div class="hidden sm:block">
+          <h2 id="userNameDisplay" class="font-bold text-xs sm:text-sm leading-tight text-black">Usuário</h2>
+          <p class="text-[10px] font-medium text-black/80">Ver Perfil</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- DIREITA: Cidade do Usuário + Sininho -->
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <div id="cityContainer" class="flex items-center bg-black/10 px-2.5 py-1.5 rounded-full text-xs font-semibold text-black max-w-[120px] sm:max-w-none truncate">
+        <svg class="w-4 h-4 mr-1 shrink-0 text-black" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <span id="userCityDisplay" class="truncate">Campo Mourão</span>
+      </div>
+      
+      <a href="04_sininho.html" class="relative p-2 hover:bg-black/10 rounded-full transition shrink-0" aria-label="Notificações">
+        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 rounded-full animate-pulse"></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL DA TELA INICIAL -->
+  <main class="flex-1 p-4 lg:p-6 space-y-6 max-w-7xl mx-auto w-full">
+
+    <!-- CONTAINER DO MAPA (13_MAPA.HTML) -->
+    <div class="rounded-3xl overflow-hidden border border-gray-800 bg-[#161B22] shadow-2xl relative">
+      <div class="w-full h-48 sm:h-60 bg-gray-900 relative z-0">
+        <iframe src="13_mapa.html" class="w-full h-full border-0" title="Mapa BUS WORK" loading="lazy"></iframe>
+      </div>
+
+      <div class="bg-emerald-600 text-white text-xs font-bold px-4 py-2 flex items-center justify-between relative z-10 shadow-inner">
+        <span class="flex items-center truncate">
+          <svg class="w-4 h-4 mr-1.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          Cupom de 40% OFF expira em 12 hora(s)
+        </span>
+        <span class="text-[10px] bg-black/20 px-2 py-0.5 rounded uppercase font-bold shrink-0">Ativo</span>
+      </div>
+
+      <div class="p-4 bg-[#0D1117] relative z-10 border-t border-gray-800">
+        <a href="12_endereco.html" class="flex items-center justify-between bg-[#FFD600] text-black p-4 rounded-2xl shadow-xl hover:bg-yellow-400 transition transform hover:-translate-y-0.5 group">
+          <div class="flex items-center space-x-3">
+            <div class="bg-black text-[#FFD600] p-2.5 rounded-xl">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div>
+              <span class="block text-xs uppercase font-black tracking-wider text-black/70">Iniciar Trajeto</span>
+              <span class="text-lg sm:text-xl font-black leading-tight">Para onde vamos hoje?</span>
+            </div>
+          </div>
+          <div class="bg-black/10 group-hover:bg-black/20 p-2 rounded-xl transition">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- PESQUISA DE EVENTOS -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+      <h3 class="font-black text-lg text-[#FFD600] flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Agenda de Eventos
+      </h3>
+      <input type="text" id="eventSearchInput" placeholder="Buscar evento..." class="bg-[#161B22] border border-gray-800 text-xs text-white px-3 py-2 rounded-lg focus:outline-none focus:border-[#FFD600] w-full sm:w-64">
+    </div>
+
+ <!-- GRID DE CARDS DOS EVENTOS -->
+    <div id="eventsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <!-- EVENTO 1: Recital de Inverno -->
+      <article class="event-card bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#FFD600] transition group flex flex-col" data-title="recital de inverno folclore nordestino teatro municipal secult cultura musica show espetaculo">
+        <div class="relative overflow-hidden bg-gray-900">
+          <img src="recital_inverno.jpeg" alt="Recital de Inverno - Folclore Nordestino" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+          <span class="absolute top-2 left-2 bg-[#FFD600] text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Cultura / Música</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1 justify-between space-y-2">
+          <div>
+            <h4 class="font-bold text-sm text-white leading-tight">Recital de Inverno - Folclore Nordestino</h4>
+            <p class="text-xs text-[#FFD600] mt-1.5 flex items-center font-semibold">
+              <svg class="w-3.5 h-3.5 mr-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              03 e 04 de Julho • 20h00
+            </p>
+            <p class="text-xs text-gray-400 mt-1">Teatro Municipal de Campo Mourão</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 2: Convite Formatura 2026 -->
+      <article class="event-card bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#FFD600] transition group flex flex-col" data-title="convite formatura 2026 teatro municipal secult ballet danca cultura espetaculo">
+        <div class="relative overflow-hidden bg-gray-900">
+          <img src="formatura_2026.jpeg" alt="Convite Formatura 2026" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+          <span class="absolute top-2 left-2 bg-[#FFD600] text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Dança & Formatura</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1 justify-between space-y-2">
+          <div>
+            <h4 class="font-bold text-sm text-white leading-tight">Convite Formatura 2026</h4>
+            <p class="text-xs text-[#FFD600] mt-1.5 flex items-center font-semibold">
+              <svg class="w-3.5 h-3.5 mr-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              15 de Julho • 20h00
+            </p>
+            <p class="text-xs text-gray-400 mt-1">Teatro Municipal de Campo Mourão</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 3: Desfile Cívico -->
+      <article class="event-card bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#FFD600] transition group flex flex-col" data-title="desfile civico independencia do brasil avenida irmaos pereira civico marcha cultura">
+        <div class="relative overflow-hidden bg-gray-900">
+          <img src="desfile_civico.jpeg" alt="Desfile Cívico - Independência do Brasil" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+          <span class="absolute top-2 left-2 bg-[#FFD600] text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Cívico</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1 justify-between space-y-2">
+          <div>
+            <h4 class="font-bold text-sm text-white leading-tight">Desfile Cívico - Independência do Brasil</h4>
+            <p class="text-xs text-[#FFD600] mt-1.5 flex items-center font-semibold">
+              <svg class="w-3.5 h-3.5 mr-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              07 de Setembro • 08h00
+            </p>
+            <p class="text-xs text-gray-400 mt-1">Avenida Irmãos Pereira</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 4: Circuito de Corridas (Esporte) -->
+      <article class="event-card bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#FFD600] transition group flex flex-col" data-title="circuito de corridas secretaria de esportes etapa integrado corrida esporte atletismo colegio integrado campo mourao">
+        <div class="relative overflow-hidden bg-gray-900">
+          <img src="corrida.jpeg" alt="Circuito de Corridas - Etapa Integrado" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+          <span class="absolute top-2 left-2 bg-[#FFD600] text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Esporte / Corrida</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1 justify-between space-y-2">
+          <div>
+            <h4 class="font-bold text-sm text-white leading-tight">Circuito de Corridas - Etapa Integrado</h4>
+            <p class="text-xs text-[#FFD600] mt-1.5 flex items-center font-semibold">
+              <svg class="w-3.5 h-3.5 mr-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              20, 21 e 22 de Agosto
+            </p>
+            <p class="text-xs text-gray-400 mt-1">Colégio Integrado • Av. Irmãos Pereira, 670</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 5: 10º Festival de Música de Campo Mourão -->
+      <article class="event-card bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#FFD600] transition group flex flex-col" data-title="10 festival de musica de campo mourao secult programa teatro cultura show musica">
+        <div class="relative overflow-hidden bg-gray-900">
+          <img src="festival_musica.jpeg" alt="10º Festival de Música de Campo Mourão" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+          <span class="absolute top-2 left-2 bg-[#FFD600] text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Música</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1 justify-between space-y-2">
+          <div>
+            <h4 class="font-bold text-sm text-white leading-tight">10º Festival de Música de Campo Mourão</h4>
+            <p class="text-xs text-[#FFD600] mt-1.5 flex items-center font-semibold">
+              <svg class="w-3.5 h-3.5 mr-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              14 a 19 de Setembro
+            </p>
+            <p class="text-xs text-gray-400 mt-1">Programação cultural completa em Campo Mourão</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 6: Empreende Week Summit 2026 -->
+      <article class="event-card bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#FFD600] transition group flex flex-col" data-title="empreende week summit 2026 ciencia tecnologia inovacao empreendedorismo negocios palestra evento">
+        <div class="relative overflow-hidden bg-gray-900">
+          <img src="empreende_week.jpeg" alt="Empreende Week Summit 2026" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+          <span class="absolute top-2 left-2 bg-[#FFD600] text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Tecnologia & Inovação</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1 justify-between space-y-2">
+          <div>
+            <h4 class="font-bold text-base text-white leading-tight">Empreende Week Summit 2026</h4>
+            <p class="text-xs text-[#FFD600] mt-1.5 flex items-center font-semibold">
+              <svg class="w-3.5 h-3.5 mr-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              05, 06 e 07 de Outubro
+            </p>
+            <p class="text-xs text-gray-400 mt-1">Ciência, tecnologia, inovação, empreendedorismo e negócios.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- DRAWER SOBREPOSTO DO MENU HAMBÚRGUER (COMPONENTE COMPARTILHADO) -->
+  <!-- ========================================================= -->
+  <div id="drawerContainer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+    
+    <!-- Fundo Escurecido (Backdrop) -->
+    <div id="drawerBackdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer"></div>
+
+    <!-- Painel Lateral Deslizante -->
+    <aside id="drawerPanel" class="absolute top-0 left-0 bottom-0 w-[82%] max-w-xs sm:max-w-sm bg-[#0D1117] border-r border-gray-800 flex flex-col justify-between p-4 sm:p-5 overflow-y-auto shadow-2xl transition-transform duration-300 -translate-x-full pointer-events-auto">
+      
+      <div class="space-y-5">
+        <!-- Cabeçalho do Menu -->
+        <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+          <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0">
+            <svg class="h-8 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="bus-icon">
+                <rect x="2" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="83" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="8" y="10" width="76" height="76" rx="16" fill="#FFD600"/>
+                <rect x="18" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="60" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="32" y="18" width="28" height="5" rx="2" fill="#121212"/>
+                <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#121212"/>
+                <circle cx="26" cy="68" r="6" fill="#121212"/>
+                <circle cx="66" cy="68" r="6" fill="#121212"/>
+                <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#121212"/>
+              </g>
+              <g id="bus-text" fill="#FFD600">
+                <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+                <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+              </g>
+            </svg>
+          </a>
+
+          <button id="closeMenuBtn" type="button" class="p-2 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition cursor-pointer" aria-label="Fechar Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Resumo do Perfil -->
+        <a href="03_tela_de_edicao_dados.html" class="bg-[#161B22] border border-gray-800 rounded-2xl p-3 flex items-center space-x-3 hover:border-[#FFD600] transition group">
+          <div id="menuAvatarPreview" class="w-10 h-10 rounded-full border-2 border-[#FFD600] bg-gray-800 flex items-center justify-center overflow-hidden shrink-0">
+            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="overflow-hidden flex-1">
+            <h3 id="menuUserName" class="font-bold text-sm text-white truncate">Usuário</h3>
+            <p id="menuCityDisplay" class="text-[11px] text-gray-400 truncate">Campo Mourão - PR</p>
+          </div>
+          <svg class="w-4 h-4 text-gray-500 group-hover:text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+
+        <!-- Lista de Links com Destaque de Página Ativa -->
+        <nav class="space-y-1.5" id="navMenuOptions">
+          
+          <a href="02_tela_inicial.html" data-page="02_tela_inicial.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span>Início</span>
+          </a>
+
+          <a href="06_mascotes.html" data-page="06_mascotes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 2.21-1.34 4.1-3.23 4.71C17.18 12.82 20 15.6 20 19v1H4v-1c0-3.4 2.82-6.18 6.23-7.29C8.34 11.1 7 9.21 7 7a5 5 0 0 1 5-5z"/></svg>
+            <span>Meu bichinho</span>
+          </a>
+
+          <a href="07_historico.html" data-page="07_historico.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Histórico</span>
+          </a>
+
+          <a href="08_rotas_final.html" data-page="08_rotas_final.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            <span>Rotas</span>
+          </a>
+
+          <a href="09_carteira.html" data-page="09_carteira.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <span>Carteira</span>
+          </a>
+
+          <a href="meus_pontos.html" data-page="meus_pontos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Meus Pontos</span>
+          </a>
+
+          <a href="10_eventos.html" data-page="10_eventos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Eventos</span>
+          </a>
+
+          <a href="03_tela_de_edicao_dados.html" data-page="03_tela_de_edicao_dados.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Editar Perfil</span>
+          </a>
+
+          <a href="11_configuracoes.html" data-page="11_configuracoes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Configurações</span>
+          </a>
+
+        </nav>
+      </div>
+
+      <div class="pt-4 border-t border-gray-800 text-center">
+        <p class="text-[11px] text-gray-500 font-medium">BUS WORK App • v2.0</p>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- SCRIPT PRINCIPAL DA TELA INICIAL -->
+  <script src="02_tela_inicial.js"></script>
+
+</body>
+</html>

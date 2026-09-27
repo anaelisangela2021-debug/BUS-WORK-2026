@@ -1,0 +1,27 @@
+/* ESTILOS DA PÁGINA DE NOTIFICAÇÕES */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.notif-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.notif-unread {
+  border-left: 4px solid #FFD600;
+  background-color: #121721;
+}
+
+.notif-read {
+  border-left: 4px solid transparent;
+  background-color: #0D1117;
+  opacity: 0.85;
+}
+
+.notif-unread:hover, .notif-read:hover {
+  transform: translateY(-1px);
+}

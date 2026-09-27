@@ -1,0 +1,18 @@
+/* SUPORTE A TOUCH E INTERAÇÃO EM DISPOSITIVOS MÓVEIS */
+.filter-btn {
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.filter-btn:active {
+  transform: scale(0.96);
+}
+
+/* OCULTAR BARRA DE ROLAGEM HORIZONTAL DAS ABAS MANTENDO ROLAGEM FUNCIONAL */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

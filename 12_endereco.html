@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUS WORK - Definir Endereço</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Estilos CSS Personalizados -->
+  <link rel="stylesheet" href="02_tela_inicial.css">
+</head>
+<body class="min-h-screen flex flex-col bg-[#090C10] text-white relative">
+
+  <!-- CABEÇALHO PADRONIZADO -->
+  <header class="bg-[#FFD600] text-black px-3 lg:px-6 py-2.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+    <div class="flex items-center space-x-2 sm:space-x-4">
+      <button id="openMenuBtn" type="button" class="p-1.5 hover:bg-black/10 rounded-lg focus:outline-none transition cursor-pointer" aria-label="Abrir Menu">
+        <svg class="w-7 h-7 text-black" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+      </button>
+
+      <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0" aria-label="BUS WORK Home">
+        <svg class="h-8 sm:h-10 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="bus-icon">
+            <rect x="2" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="83" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="8" y="10" width="76" height="76" rx="16" fill="#121212"/>
+            <rect x="18" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="60" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="32" y="18" width="28" height="5" rx="2" fill="#FFD600"/>
+            <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#FFD600"/>
+            <circle cx="26" cy="68" r="6" fill="#FFD600"/>
+            <circle cx="66" cy="68" r="6" fill="#FFD600"/>
+            <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#FFD600"/>
+          </g>
+          <g id="bus-text" fill="#121212">
+            <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+            <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+          </g>
+        </svg>
+      </a>
+
+      <a href="03_tela_de_edicao_dados.html" class="flex items-center space-x-2 border-l border-black/20 pl-2 sm:pl-4 hover:opacity-80 transition" title="Editar Perfil">
+        <div id="userAvatarContainer" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-black bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+          <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div class="hidden sm:block">
+          <h2 id="userNameDisplay" class="font-bold text-xs sm:text-sm leading-tight text-black">Usuário</h2>
+          <p class="text-[10px] font-medium text-black/80">Ver Perfil</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <div id="cityContainer" class="flex items-center bg-black/10 px-2.5 py-1.5 rounded-full text-xs font-semibold text-black max-w-[130px] sm:max-w-none truncate">
+        <svg class="w-4 h-4 mr-1 shrink-0 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="userCityDisplay" class="truncate">Campo Mourão</span>
+      </div>
+      
+      <a href="04_sininho.html" class="relative p-2 hover:bg-black/10 rounded-full transition shrink-0" aria-label="Notificações">
+        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 rounded-full animate-pulse"></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-1 p-4 lg:p-6 max-w-2xl mx-auto w-full flex flex-col justify-center my-auto">
+    <div class="bg-[#0D1117] border border-gray-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+      
+      <!-- BARRINHA DE STATUS DO GPS -->
+      <div id="locationBadge" class="mb-5 p-3 bg-[#FFD600]/10 border border-[#FFD600]/30 rounded-xl flex items-center justify-between text-xs text-[#FFD600]">
+        <div class="flex items-center gap-2 overflow-hidden">
+          <svg class="w-4 h-4 shrink-0 animate-bounce text-[#FFD600]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="locationBadgeText" class="truncate">Clique para ativar a localização via GPS</span>
+        </div>
+        <button id="btnRequestLocation" type="button" class="shrink-0 bg-[#FFD600] text-black text-[11px] font-bold px-3 py-1.5 rounded-lg hover:bg-yellow-400 transition shadow">
+          Ativar GPS
+        </button>
+      </div>
+
+      <div class="text-center mb-6">
+        <h2 class="text-xl sm:text-2xl font-black text-white">Para onde vamos hoje?</h2>
+        <p class="text-xs sm:text-sm text-gray-400 mt-1">Busca por CEP / Rua com visualização via Google Earth</p>
+      </div>
+
+      <form id="routeForm" class="space-y-6" onsubmit="return false;">
+        
+        <!-- BLOCO ORIGEM -->
+        <div class="space-y-2 bg-[#161B22] p-4 rounded-2xl border border-gray-800">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-[#FFD600] uppercase tracking-wider">1. Ponto de Origem</label>
+            <button type="button" id="btnGpsOrigem" class="text-[11px] font-bold text-[#FFD600] hover:underline flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+              Usar meu GPS
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div class="sm:col-span-2">
+              <input type="text" id="origemCepInput" placeholder="CEP ou Nome da Rua" class="w-full bg-[#0D1117] border border-gray-700 focus:border-[#FFD600] text-white text-xs sm:text-sm rounded-xl px-3.5 py-2.5 outline-none transition">
+            </div>
+            <div>
+              <input type="text" id="origemNumeroInput" placeholder="Nº Ex: 100" class="w-full bg-[#0D1117] border border-gray-700 focus:border-[#FFD600] text-white text-xs sm:text-sm rounded-xl px-3.5 py-2.5 outline-none transition">
+            </div>
+          </div>
+          <div id="origemEnderecoCompleto" class="text-[11px] text-gray-400 min-h-[16px] truncate"></div>
+        </div>
+
+        <!-- BLOCO DESTINO -->
+        <div class="space-y-2 bg-[#161B22] p-4 rounded-2xl border border-gray-800">
+          <label class="block text-xs font-bold text-[#FFD600] uppercase tracking-wider">2. Ponto de Destino</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div class="sm:col-span-2">
+              <input type="text" id="destinoCepInput" placeholder="CEP ou Nome da Rua" class="w-full bg-[#0D1117] border border-gray-700 focus:border-[#FFD600] text-white text-xs sm:text-sm rounded-xl px-3.5 py-2.5 outline-none transition">
+            </div>
+            <div>
+              <input type="text" id="destinoNumeroInput" placeholder="Nº Ex: 550" class="w-full bg-[#0D1117] border border-gray-700 focus:border-[#FFD600] text-white text-xs sm:text-sm rounded-xl px-3.5 py-2.5 outline-none transition">
+            </div>
+          </div>
+          <div id="destinoEnderecoCompleto" class="text-[11px] text-gray-400 min-h-[16px] truncate"></div>
+        </div>
+
+        <!-- MENSAGEM DE STATUS -->
+        <div id="statusMsg" class="text-xs text-center font-semibold min-h-[18px]"></div>
+
+        <!-- BOTÃO INICIAR ROTA -->
+        <button type="button" id="btnIniciarRota" class="w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black text-base py-3.5 px-4 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+          <span>Iniciar Rota</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </form>
+
+    </div>
+  </main>
+
+  <!-- DRAWER SOBREPOSTO DO MENU HAMBÚRGUER -->
+  <div id="drawerContainer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+    <div id="drawerBackdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer"></div>
+    <aside id="drawerPanel" class="absolute top-0 left-0 bottom-0 w-[82%] max-w-xs sm:max-w-sm bg-[#0D1117] border-r border-gray-800 flex flex-col justify-between p-4 sm:p-5 overflow-y-auto shadow-2xl transition-transform duration-300 -translate-x-full pointer-events-auto">
+      <div class="space-y-5">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+          <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0">
+            <svg class="h-8 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="bus-icon">
+                <rect x="2" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="83" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="8" y="10" width="76" height="76" rx="16" fill="#FFD600"/>
+                <rect x="18" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="60" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="32" y="18" width="28" height="5" rx="2" fill="#121212"/>
+                <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#121212"/>
+                <circle cx="26" cy="68" r="6" fill="#121212"/>
+                <circle cx="66" cy="68" r="6" fill="#121212"/>
+                <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#121212"/>
+              </g>
+              <g id="bus-text" fill="#FFD600">
+                <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+                <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+              </g>
+            </svg>
+          </a>
+          <button id="closeMenuBtn" type="button" class="p-2 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition cursor-pointer" aria-label="Fechar Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <a href="03_tela_de_edicao_dados.html" class="bg-[#161B22] border border-gray-800 rounded-2xl p-3 flex items-center space-x-3 hover:border-[#FFD600] transition group">
+          <div id="menuAvatarPreview" class="w-10 h-10 rounded-full border-2 border-[#FFD600] bg-gray-800 flex items-center justify-center overflow-hidden shrink-0">
+            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="overflow-hidden flex-1">
+            <h3 id="menuUserName" class="font-bold text-sm text-white truncate">Usuário</h3>
+            <p id="menuCityDisplay" class="text-[11px] text-gray-400 truncate">Campo Mourão - PR</p>
+          </div>
+        </a>
+
+        <nav class="space-y-1.5" id="navMenuOptions">
+          <a href="02_tela_inicial.html" data-page="02_tela_inicial.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Início</span>
+          </a>
+          <a href="12_endereco.html" data-page="12_endereco.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Definir Endereço</span>
+          </a>
+          <a href="06_mascotes.html" data-page="06_mascotes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Meu bichinho</span>
+          </a>
+          <a href="07_historico.html" data-page="07_historico.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Histórico</span>
+          </a>
+          <a href="08_rotas_final.html" data-page="08_rotas_final.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Rotas</span>
+          </a>
+          <a href="09_carteira.html" data-page="09_carteira.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Carteira</span>
+          </a>
+          <a href="meus_pontos.html" data-page="meus_pontos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Meus Pontos</span>
+          </a>
+          <a href="10_eventos.html" data-page="10_eventos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Eventos</span>
+          </a>
+          <a href="11_configuracoes.html" data-page="11_configuracoes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm transition-all duration-200">
+            <span>Configurações</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="pt-4 border-t border-gray-800 text-center">
+        <p class="text-[11px] text-gray-500 font-medium">BUS WORK App • v2.0</p>
+      </div>
+    </aside>
+  </div>
+
+  <script src="12_endereco.js"></script>
+</body>
+</html>

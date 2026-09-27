@@ -1,0 +1,106 @@
+/* Reset básico para remover margens padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Container principal que ocupa a tela toda */
+.splash-container {
+    width: 100vw;
+    height: 100vh;
+    /* Degradê em tons de amarelo (do pastel ao escuro) */
+    background: linear-gradient(135deg, #fff9d6 0%, #ffd700 50%, #b38700 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animação do Logo Central (Pulsar e aparecer) */
+.logo-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: zoomIn 1.5s ease-out forwards;
+}
+
+.logo-circle {
+    width: 120px;
+    height: 120px;
+    background-color: #332900; /* Marrom escuro para contraste */
+    border-radius: 30px; /* Borda arredondada suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.logo-circle h1 {
+    color: #ffd700;
+    font-size: 3rem;
+    letter-spacing: 2px;
+}
+
+/* Estilo do texto inferior */
+.bottom-text {
+    padding-bottom: 40px;
+    text-align: center;
+    color: #332900;
+    animation: fadeIn 2s ease-in forwards;
+}
+
+.bottom-text p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 2px;
+}
+
+.bottom-text h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    background: linear-gradient(to right, #332900, #5c4a00);
+    -webkit-background-clip: text;
+    background-clip: text; /* Adicionado para tirar o erro do editor */
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Adicionado como garantia */
+}
+
+/* --- KEYFRAMES (Animações) --- */
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animação de saída que será acionada pelo JS */
+.fade-out {
+    animation: fadeOut 0.8s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}

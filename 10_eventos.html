@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUS WORK - Eventos na Cidade</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Script JavaScript -->
+  <script src="10_eventos.js" defer></script>
+</head>
+<body class="min-h-screen flex flex-col bg-[#090C10] text-white relative font-sans">
+
+  <!-- CABEÇALHO PADRONIZADO -->
+  <header class="bg-[#FFD600] text-black px-3 lg:px-6 py-2.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+    <div class="flex items-center space-x-2 sm:space-x-4">
+      <button id="openMenuBtn" type="button" class="p-1.5 hover:bg-black/10 rounded-lg focus:outline-none transition cursor-pointer" aria-label="Abrir Menu">
+        <svg class="w-7 h-7 text-black" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+      </button>
+
+      <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0" aria-label="BUS WORK Home">
+        <svg class="h-8 sm:h-10 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="bus-icon">
+            <rect x="2" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="83" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="8" y="10" width="76" height="76" rx="16" fill="#121212"/>
+            <rect x="18" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="60" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="32" y="18" width="28" height="5" rx="2" fill="#FFD600"/>
+            <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#FFD600"/>
+            <circle cx="26" cy="68" r="6" fill="#FFD600"/>
+            <circle cx="66" cy="68" r="6" fill="#FFD600"/>
+            <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#FFD600"/>
+          </g>
+          <g id="bus-text" fill="#121212">
+            <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+            <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+          </g>
+        </svg>
+      </a>
+
+      <a href="03_tela_de_edicao_dados.html" class="flex items-center space-x-2 border-l border-black/20 pl-2 sm:pl-4 hover:opacity-80 transition">
+        <div id="userAvatarContainer" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-black bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+          <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div class="hidden sm:block">
+          <h2 id="userNameDisplay" class="font-bold text-xs sm:text-sm leading-tight text-black">Usuário</h2>
+          <p class="text-[10px] font-medium text-black/80">Ver Perfil</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <div id="cityContainer" class="flex items-center bg-black/10 px-2.5 py-1.5 rounded-full text-xs font-semibold text-black max-w-[120px] sm:max-w-none truncate">
+        <svg class="w-4 h-4 mr-1 shrink-0 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="userCityDisplay" class="truncate">Campo Mourão</span>
+      </div>
+      
+      <a href="04_sininho.html" class="relative p-2 hover:bg-black/10 rounded-full transition shrink-0" aria-label="Notificações">
+        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 rounded-full animate-pulse"></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-1 p-4 lg:p-6 space-y-6 max-w-6xl mx-auto w-full">
+
+    <!-- BANNER DE DESTAQUE -->
+    <div class="bg-gradient-to-br from-[#161B22] via-[#0D1117] to-[#161B22] border border-gray-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-52 h-52 bg-[#FFD600]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-3">
+        <div class="flex items-center space-x-2 text-xs font-bold text-[#FFD600] uppercase tracking-wider">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Agenda de Eventos da Cidade</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-black text-white">Vá para eventos de ônibus e acumule pontos!</h1>
+        <p class="text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed">
+          Viagens rotineiras não acumulam pontos por deslocamento. Porém, ao participar de qualquer evento cadastrado, você ganha <strong class="text-[#FFD600]">pontos ao iniciar o trajeto</strong> e <strong class="text-emerald-400">pontos extras ao enviar a foto de comprovação</strong>!
+        </p>
+
+        <!-- RESUMO DE PONTUAÇÃO DOS EVENTOS -->
+        <div class="pt-2 flex flex-wrap gap-3">
+          <div class="bg-[#0D1117]/80 border border-amber-500/30 px-3.5 py-2 rounded-xl flex items-center space-x-2 text-xs">
+            <span class="p-1.5 bg-amber-500/20 text-amber-400 rounded-lg font-black">🚌</span>
+            <span><strong>Iniciar Trajeto:</strong> Ganhe +40 PTS</span>
+          </div>
+          <div class="bg-[#0D1117]/80 border border-emerald-500/30 px-3.5 py-2 rounded-xl flex items-center space-x-2 text-xs">
+            <span class="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg font-black">📸</span>
+            <span><strong>Enviar Foto:</strong> Ganhe +100 PTS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTROS DE CATEGORIA -->
+    <div class="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
+      <button type="button" class="filter-btn active bg-[#FFD600] text-black font-extrabold px-4 py-2 rounded-xl text-xs shrink-0 transition" data-category="todos">
+        Todos os Eventos
+      </button>
+      <button type="button" class="filter-btn bg-[#161B22] border border-gray-800 hover:border-gray-700 text-gray-300 font-bold px-4 py-2 rounded-xl text-xs shrink-0 transition" data-category="academico">
+        🎓 Acadêmicos
+      </button>
+      <button type="button" class="filter-btn bg-[#161B22] border border-gray-800 hover:border-gray-700 text-gray-300 font-bold px-4 py-2 rounded-xl text-xs shrink-0 transition" data-category="cultural">
+        🎭 Culturais & Shows
+      </button>
+      <button type="button" class="filter-btn bg-[#161B22] border border-gray-800 hover:border-gray-700 text-gray-300 font-bold px-4 py-2 rounded-xl text-xs shrink-0 transition" data-category="esportes">
+        ⚽ Esportes
+      </button>
+      <button type="button" class="filter-btn bg-[#161B22] border border-gray-800 hover:border-gray-700 text-gray-300 font-bold px-4 py-2 rounded-xl text-xs shrink-0 transition" data-category="feiras">
+        🍔 Feiras & Gastronomia
+      </button>
+    </div>
+
+    <!-- GRID DE EVENTOS DA CIDADE -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="eventsGridContainer">
+
+      <!-- EVENTO 1: ACADÊMICO / INOVAÇÃO -->
+      <article class="event-card bg-[#161B22] border border-gray-800 rounded-3xl overflow-hidden flex flex-col justify-between hover:border-[#FFD600]/40 transition group" data-category="academico">
+        <div class="relative h-48 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=700&q=80" alt="Feira Tecnológica" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#161B22] via-transparent to-transparent"></div>
+          <span class="absolute top-3 left-3 bg-indigo-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">ACADÊMICO</span>
+          <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-500/30">
+            Hoje • 19:00
+          </span>
+        </div>
+
+        <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+          <div class="space-y-2">
+            <h2 class="font-bold text-base text-white group-hover:text-[#FFD600] transition">Feira de Inovação & Tecnologia UTFPR</h2>
+            <p class="text-xs text-gray-400 leading-relaxed">Apresentação de projetos acadêmicos, startups e oficinas abertas à comunidade local.</p>
+            
+            <div class="flex items-center text-xs text-gray-300 pt-1">
+              <svg class="w-4 h-4 mr-1 text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="truncate">Campus UTFPR - Campo Mourão</span>
+            </div>
+          </div>
+
+          <!-- PONTOS DISPONÍVEIS -->
+          <div class="space-y-3 pt-3 border-t border-gray-800">
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div class="bg-[#0D1117] border border-amber-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Viajar até lá</span>
+                <span class="font-black text-amber-400 text-sm">+40 PTS</span>
+              </div>
+              <div class="bg-[#0D1117] border border-emerald-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Foto no Local</span>
+                <span class="font-black text-emerald-400 text-sm">+100 PTS</span>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <button type="button" class="start-event-trip-btn w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Feira de Inovação UTFPR" data-points="40">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Iniciar Trajeto (+40 PTS)</span>
+              </button>
+
+              <button type="button" class="send-event-photo-btn w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Feira de Inovação UTFPR" data-points="100">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Enviar Foto do Evento (+100 PTS)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 2: CULTURAL & SHOWS -->
+      <article class="event-card bg-[#161B22] border border-gray-800 rounded-3xl overflow-hidden flex flex-col justify-between hover:border-[#FFD600]/40 transition group" data-category="cultural">
+        <div class="relative h-48 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=700&q=80" alt="Show Cultural" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#161B22] via-transparent to-transparent"></div>
+          <span class="absolute top-3 left-3 bg-purple-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">CULTURAL</span>
+          <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-500/30">
+            Amanhã • 20:00
+          </span>
+        </div>
+
+        <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+          <div class="space-y-2">
+            <h2 class="font-bold text-base text-white group-hover:text-[#FFD600] transition">Festival de Música e Cultura da Praça</h2>
+            <p class="text-xs text-gray-400 leading-relaxed">Apresentações musicais ao vivo, bandas locais e feira de artesanato no centro da cidade.</p>
+            
+            <div class="flex items-center text-xs text-gray-300 pt-1">
+              <svg class="w-4 h-4 mr-1 text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="truncate">Praça São José - Centro</span>
+            </div>
+          </div>
+
+          <!-- PONTOS DISPONÍVEIS -->
+          <div class="space-y-3 pt-3 border-t border-gray-800">
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div class="bg-[#0D1117] border border-amber-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Viajar até lá</span>
+                <span class="font-black text-amber-400 text-sm">+50 PTS</span>
+              </div>
+              <div class="bg-[#0D1117] border border-emerald-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Foto no Local</span>
+                <span class="font-black text-emerald-400 text-sm">+100 PTS</span>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <button type="button" class="start-event-trip-btn w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Festival de Música da Praça" data-points="50">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Iniciar Trajeto (+50 PTS)</span>
+              </button>
+
+              <button type="button" class="send-event-photo-btn w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Festival de Música da Praça" data-points="100">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Enviar Foto do Evento (+100 PTS)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 3: ESPORTES -->
+      <article class="event-card bg-[#161B22] border border-gray-800 rounded-3xl overflow-hidden flex flex-col justify-between hover:border-[#FFD600]/40 transition group" data-category="esportes">
+        <div class="relative h-48 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=700&q=80" alt="Torneio Esportivo" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#161B22] via-transparent to-transparent"></div>
+          <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">ESPORTES</span>
+          <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-500/30">
+            Sábado • 14:00
+          </span>
+        </div>
+
+        <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+          <div class="space-y-2">
+            <h2 class="font-bold text-base text-white group-hover:text-[#FFD600] transition">Torneio Municipal de Basquete & Futsal</h2>
+            <p class="text-xs text-gray-400 leading-relaxed">Etapa final do campeonato intercolegial e universitário municipal.</p>
+            
+            <div class="flex items-center text-xs text-gray-300 pt-1">
+              <svg class="w-4 h-4 mr-1 text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="truncate">Ginásio de Esportes J.K.</span>
+            </div>
+          </div>
+
+          <!-- PONTOS DISPONÍVEIS -->
+          <div class="space-y-3 pt-3 border-t border-gray-800">
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div class="bg-[#0D1117] border border-amber-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Viajar até lá</span>
+                <span class="font-black text-amber-400 text-sm">+40 PTS</span>
+              </div>
+              <div class="bg-[#0D1117] border border-emerald-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Foto no Local</span>
+                <span class="font-black text-emerald-400 text-sm">+100 PTS</span>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <button type="button" class="start-event-trip-btn w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Torneio Municipal Esportivo" data-points="40">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Iniciar Trajeto (+40 PTS)</span>
+              </button>
+
+              <button type="button" class="send-event-photo-btn w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Torneio Municipal Esportivo" data-points="100">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Enviar Foto do Evento (+100 PTS)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 4: FEIRAS & GASTRONOMIA -->
+      <article class="event-card bg-[#161B22] border border-gray-800 rounded-3xl overflow-hidden flex flex-col justify-between hover:border-[#FFD600]/40 transition group" data-category="feiras">
+        <div class="relative h-48 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=700&q=80" alt="Feira Gastronômica" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#161B22] via-transparent to-transparent"></div>
+          <span class="absolute top-3 left-3 bg-amber-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">GASTRONOMIA</span>
+          <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-500/30">
+            Domingo • 11:00
+          </span>
+        </div>
+
+        <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+          <div class="space-y-2">
+            <h2 class="font-bold text-base text-white group-hover:text-[#FFD600] transition">Feira Gastronômica & Food Trucks</h2>
+            <p class="text-xs text-gray-400 leading-relaxed">Pratos típicos, food trucks, sobremesas artesanais e espaço kids para a família toda.</p>
+            
+            <div class="flex items-center text-xs text-gray-300 pt-1">
+              <svg class="w-4 h-4 mr-1 text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="truncate">Parque de Exposições</span>
+            </div>
+          </div>
+
+          <!-- PONTOS DISPONÍVEIS -->
+          <div class="space-y-3 pt-3 border-t border-gray-800">
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div class="bg-[#0D1117] border border-amber-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Viajar até lá</span>
+                <span class="font-black text-amber-400 text-sm">+40 PTS</span>
+              </div>
+              <div class="bg-[#0D1117] border border-emerald-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Foto no Local</span>
+                <span class="font-black text-emerald-400 text-sm">+100 PTS</span>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <button type="button" class="start-event-trip-btn w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Feira Gastronômica & Food Trucks" data-points="40">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Iniciar Trajeto (+40 PTS)</span>
+              </button>
+
+              <button type="button" class="send-event-photo-btn w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Feira Gastronômica & Food Trucks" data-points="100">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Enviar Foto do Evento (+100 PTS)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 5: ACADÊMICO UNESPAR -->
+      <article class="event-card bg-[#161B22] border border-gray-800 rounded-3xl overflow-hidden flex flex-col justify-between hover:border-[#FFD600]/40 transition group" data-category="academico">
+        <div class="relative h-48 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=700&q=80" alt="Congresso Unespar" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#161B22] via-transparent to-transparent"></div>
+          <span class="absolute top-3 left-3 bg-indigo-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">ACADÊMICO</span>
+          <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-500/30">
+            Sex • 18:30
+          </span>
+        </div>
+
+        <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+          <div class="space-y-2">
+            <h2 class="font-bold text-base text-white group-hover:text-[#FFD600] transition">Congresso de Extensão & Ciência UNESPAR</h2>
+            <p class="text-xs text-gray-400 leading-relaxed">Palestras sobre desenvolvimento regional, sustentabilidade e inovação social.</p>
+            
+            <div class="flex items-center text-xs text-gray-300 pt-1">
+              <svg class="w-4 h-4 mr-1 text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="truncate">Campus UNESPAR - Campo Mourão</span>
+            </div>
+          </div>
+
+          <!-- PONTOS DISPONÍVEIS -->
+          <div class="space-y-3 pt-3 border-t border-gray-800">
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div class="bg-[#0D1117] border border-amber-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Viajar até lá</span>
+                <span class="font-black text-amber-400 text-sm">+40 PTS</span>
+              </div>
+              <div class="bg-[#0D1117] border border-emerald-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Foto no Local</span>
+                <span class="font-black text-emerald-400 text-sm">+100 PTS</span>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <button type="button" class="start-event-trip-btn w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Congresso UNESPAR" data-points="40">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Iniciar Trajeto (+40 PTS)</span>
+              </button>
+
+              <button type="button" class="send-event-photo-btn w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Congresso UNESPAR" data-points="100">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Enviar Foto do Evento (+100 PTS)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVENTO 6: ESPORTES - CORRIDA -->
+      <article class="event-card bg-[#161B22] border border-gray-800 rounded-3xl overflow-hidden flex flex-col justify-between hover:border-[#FFD600]/40 transition group" data-category="esportes">
+        <div class="relative h-48 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?auto=format&fit=crop&w=700&q=80" alt="Corrida Noturna" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#161B22] via-transparent to-transparent"></div>
+          <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">ESPORTES</span>
+          <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-500/30">
+            Sáb • 19:30
+          </span>
+        </div>
+
+        <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+          <div class="space-y-2">
+            <h2 class="font-bold text-base text-white group-hover:text-[#FFD600] transition">Corrida Noturna de Campo Mourão (5k & 10k)</h2>
+            <p class="text-xs text-gray-400 leading-relaxed">Evento esportivo noturno com circuito urbano pelas principais avenidas.</p>
+            
+            <div class="flex items-center text-xs text-gray-300 pt-1">
+              <svg class="w-4 h-4 mr-1 text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="truncate">Largada: Prefeitura Municipal</span>
+            </div>
+          </div>
+
+          <!-- PONTOS DISPONÍVEIS -->
+          <div class="space-y-3 pt-3 border-t border-gray-800">
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div class="bg-[#0D1117] border border-amber-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Viajar até lá</span>
+                <span class="font-black text-amber-400 text-sm">+50 PTS</span>
+              </div>
+              <div class="bg-[#0D1117] border border-emerald-500/30 p-2 rounded-xl">
+                <span class="block text-[10px] text-gray-400 font-semibold">Foto no Local</span>
+                <span class="font-black text-emerald-400 text-sm">+100 PTS</span>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <button type="button" class="start-event-trip-btn w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Corrida Noturna" data-points="50">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Iniciar Trajeto (+50 PTS)</span>
+              </button>
+
+              <button type="button" class="send-event-photo-btn w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center justify-center space-x-2" data-event-title="Corrida Noturna" data-points="100">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Enviar Foto do Evento (+100 PTS)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL: CONFIRMAR INÍCIO DE TRAJETO PARA O EVENTO -->
+  <div id="eventTripModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="bg-[#161B22] border border-gray-800 rounded-3xl p-6 max-w-md w-full space-y-5 shadow-2xl relative">
+      <button id="closeEventTripModalBtn" type="button" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white rounded-xl">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div class="text-center space-y-2">
+        <div class="inline-flex p-3 bg-[#FFD600]/10 text-[#FFD600] rounded-2xl">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 6v6M16 6v6M2 12h20M4 18h16M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <h3 class="text-lg font-black text-white" id="modalEventTripTitle">Iniciar Trajeto para o Evento</h3>
+        <p class="text-xs text-gray-400">Você está embarcando de ônibus em direção a este evento cadastrado. Confirme o início da viagem para garantir seus pontos!</p>
+      </div>
+
+      <div class="bg-[#0D1117] border border-gray-800 p-4 rounded-2xl flex items-center justify-between">
+        <span class="text-xs font-bold text-gray-300">Recompensa da Viagem:</span>
+        <span class="text-sm font-black text-[#FFD600]" id="modalEventTripPoints">+40 PTS</span>
+      </div>
+
+      <button id="confirmEventTripBtn" type="button" class="w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black py-3.5 rounded-2xl transition cursor-pointer text-xs sm:text-sm">
+        Confirmar Trajeto e Resgatar Pontos
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: ENVIAR FOTO DO EVENTO -->
+  <div id="eventPhotoModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="bg-[#161B22] border border-gray-800 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl relative">
+      <button id="closeEventPhotoModalBtn" type="button" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white rounded-xl">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div class="text-center space-y-1">
+        <h3 class="text-lg font-black text-white" id="modalEventPhotoTitle">Comprovação de Presença</h3>
+        <p class="text-xs text-gray-400">Envie uma foto do evento para ganhar <strong class="text-emerald-400" id="modalEventPhotoPoints">+100 PTS</strong> extras!</p>
+      </div>
+
+      <div id="eventUploadBox" class="border-2 border-dashed border-gray-700 hover:border-[#FFD600] rounded-2xl p-6 text-center space-y-3 cursor-pointer bg-[#0D1117] transition">
+        <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-2xl inline-block">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <div>
+          <span class="block text-xs font-bold text-white">Anexar ou tirar foto do evento</span>
+          <span class="text-[10px] text-gray-500">Formatos aceitos: JPG, PNG</span>
+        </div>
+        <input type="file" id="eventPhotoInput" accept="image/*" class="hidden">
+      </div>
+
+      <div id="eventPhotoPreviewContainer" class="hidden space-y-2">
+        <img id="eventPhotoPreviewImg" src="" alt="Pré-visualização da Foto" class="w-full h-40 object-cover rounded-xl border border-gray-700">
+        <span class="block text-center text-xs text-emerald-400 font-bold">✓ Foto anexada pronta para envio!</span>
+      </div>
+
+      <button id="submitEventPhotoBtn" type="button" disabled class="w-full bg-gray-700 text-gray-400 font-black py-3 rounded-xl transition cursor-not-allowed text-xs sm:text-sm">
+        Anexe uma foto para prosseguir
+      </button>
+    </div>
+  </div>
+
+  <!-- DRAWER DO MENU HAMBÚRGUER -->
+  <div id="drawerContainer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+    <div id="drawerBackdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer"></div>
+
+    <aside id="drawerPanel" class="absolute top-0 left-0 bottom-0 w-[82%] max-w-xs sm:max-w-sm bg-[#0D1117] border-r border-gray-800 flex flex-col justify-between p-4 sm:p-5 overflow-y-auto shadow-2xl transition-transform duration-300 -translate-x-full pointer-events-auto">
+      <div class="space-y-5">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+          <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0">
+            <svg class="h-8 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="bus-icon">
+                <rect x="2" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="83" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="8" y="10" width="76" height="76" rx="16" fill="#FFD600"/>
+                <rect x="18" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="60" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="32" y="18" width="28" height="5" rx="2" fill="#121212"/>
+                <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#121212"/>
+                <circle cx="26" cy="68" r="6" fill="#121212"/>
+                <circle cx="66" cy="68" r="6" fill="#121212"/>
+                <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#121212"/>
+              </g>
+              <g id="bus-text" fill="#FFD600">
+                <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+                <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+              </g>
+            </svg>
+          </a>
+
+          <button id="closeMenuBtn" type="button" class="p-2 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition cursor-pointer" aria-label="Fechar Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <a href="03_tela_de_edicao_dados.html" class="bg-[#161B22] border border-gray-800 rounded-2xl p-3 flex items-center space-x-3 hover:border-[#FFD600] transition group">
+          <div id="menuAvatarPreview" class="w-10 h-10 rounded-full border-2 border-[#FFD600] bg-gray-800 flex items-center justify-center overflow-hidden shrink-0">
+            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="overflow-hidden flex-1">
+            <h3 id="menuUserName" class="font-bold text-sm text-white truncate">Usuário</h3>
+            <p id="menuCityDisplay" class="text-[11px] text-gray-400 truncate">Campo Mourão - PR</p>
+          </div>
+          <svg class="w-4 h-4 text-gray-500 group-hover:text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+
+        <!-- NAVEGAÇÃO -->
+        <nav class="space-y-1.5">
+          <a href="02_tela_inicial.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span>Início</span>
+          </a>
+
+          <a href="06_mascotes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 2.21-1.34 4.1-3.23 4.71C17.18 12.82 20 15.6 20 19v1H4v-1c0-3.4 2.82-6.18 6.23-7.29C8.34 11.1 7 9.21 7 7a5 5 0 0 1 5-5z"/></svg>
+            <span>Meu bichinho</span>
+          </a>
+
+          <a href="07_historico.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Histórico</span>
+          </a>
+
+          <a href="08_rotas_final.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            <span>Rotas</span>
+          </a>
+
+          <a href="09_carteira.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <span>Carteira</span>
+          </a>
+
+          <a href="meus_pontos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Meus Pontos</span>
+          </a>
+
+          <a href="10_eventos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-black text-sm bg-[#FFD600] text-black shadow-lg transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Eventos</span>
+          </a>
+
+          <a href="03_tela_de_edicao_dados.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Editar Perfil</span>
+          </a>
+
+          <a href="11_configuracoes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Configurações</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="pt-4 border-t border-gray-800 text-center">
+        <p class="text-[11px] text-gray-500 font-medium">BUS WORK App • v2.0</p>
+      </div>
+    </aside>
+  </div>
+
+</body>
+</html>

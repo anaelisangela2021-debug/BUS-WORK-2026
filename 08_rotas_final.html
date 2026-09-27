@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUS WORK - Horários e Rotas de Ônibus</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- jsPDF & autoTable para geração rápida de PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <!-- Estilos CSS Personalizados -->
+  <link rel="stylesheet" href="08_rotas_final.css">
+  <!-- Script JavaScript -->
+  <script src="08_rotas_final.js" defer></script>
+</head>
+<body class="min-h-screen flex flex-col bg-[#090C10] text-white relative">
+
+  <!-- CABEÇALHO PADRONIZADO -->
+  <header class="bg-[#FFD600] text-black px-3 lg:px-6 py-2.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+    <div class="flex items-center space-x-2 sm:space-x-4">
+      <button id="openMenuBtn" type="button" class="p-1.5 hover:bg-black/10 rounded-lg focus:outline-none transition cursor-pointer" aria-label="Abrir Menu">
+        <svg class="w-7 h-7 text-black" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+      </button>
+
+      <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0" aria-label="BUS WORK Home">
+        <svg class="h-8 sm:h-10 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="bus-icon">
+            <rect x="2" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="83" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="8" y="10" width="76" height="76" rx="16" fill="#121212"/>
+            <rect x="18" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="60" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="32" y="18" width="28" height="5" rx="2" fill="#FFD600"/>
+            <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#FFD600"/>
+            <circle cx="26" cy="68" r="6" fill="#FFD600"/>
+            <circle cx="66" cy="68" r="6" fill="#FFD600"/>
+            <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#FFD600"/>
+          </g>
+          <g id="bus-text" fill="#121212">
+            <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+            <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+          </g>
+        </svg>
+      </a>
+
+      <a href="03_tela_de_edicao_dados.html" class="flex items-center space-x-2 border-l border-black/20 pl-2 sm:pl-4 hover:opacity-80 transition">
+        <div id="userAvatarContainer" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-black bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+          <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div class="hidden sm:block">
+          <h2 id="userNameDisplay" class="font-bold text-xs sm:text-sm leading-tight text-black">Usuário</h2>
+          <p class="text-[10px] font-medium text-black/80">Ver Perfil</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <div id="cityContainer" class="flex items-center bg-black/10 px-2.5 py-1.5 rounded-full text-xs font-semibold text-black max-w-[120px] sm:max-w-none truncate">
+        <svg class="w-4 h-4 mr-1 shrink-0 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="userCityDisplay" class="truncate">Campo Mourão</span>
+      </div>
+      
+      <a href="04_sininho.html" class="relative p-2 hover:bg-black/10 rounded-full transition shrink-0" aria-label="Notificações">
+        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 rounded-full animate-pulse"></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-1 p-4 lg:p-6 space-y-6 max-w-7xl mx-auto w-full">
+
+    <div class="bg-[#161B22] border border-gray-800 rounded-3xl p-5 sm:p-6 shadow-xl relative overflow-hidden">
+      <div class="relative z-10 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center space-x-3">
+            <div class="bg-[#FFD600] text-black p-3 rounded-2xl shadow-lg">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div>
+              <h1 class="text-xl sm:text-2xl font-black text-white">Tabelas de Horários e Linhas</h1>
+              <p class="text-xs sm:text-sm text-gray-400">Consulte itinerários completos e baixe PDFs com tabelas oficiais.</p>
+            </div>
+          </div>
+
+          <!-- BOTÃO GERAL DE DOWNLOAD PDF DE TODAS AS LINHAS -->
+          <button id="downloadAllPdfBtn" type="button" class="flex items-center justify-center space-x-2 bg-[#FFD600] text-black font-bold px-4 py-2.5 rounded-xl hover:bg-yellow-400 transition shadow-md cursor-pointer text-xs sm:text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Baixar Tabela PDF Geral</span>
+          </button>
+        </div>
+
+        <div class="relative pt-1">
+          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#FFD600]">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" id="routeSearchInput" placeholder="Pesquisar por linha, itinerário ou bairro (Ex: UTFPR, SESI, Piacentini, Lar Paraná)..." class="w-full bg-[#0D1117] border border-gray-800 text-xs sm:text-sm text-white pl-10 pr-4 py-3.5 rounded-xl focus:outline-none focus:border-[#FFD600] transition">
+        </div>
+      </div>
+    </div>
+
+    <!-- PAINEL DE FILTROS E AÇÕES GLOBAIS -->
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800 pb-4">
+      <div class="flex items-center space-x-2 overflow-x-auto pb-1 max-w-full">
+        <button type="button" class="route-filter-btn active bg-[#FFD600] text-black font-bold px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap transition cursor-pointer" data-filter="all">Todas as Linhas (13)</button>
+        <button type="button" class="route-filter-btn bg-[#161B22] border border-gray-800 text-gray-300 hover:text-white font-semibold px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap transition cursor-pointer" data-filter="express">Expressas / Ind.</button>
+        <button type="button" class="route-filter-btn bg-[#161B22] border border-gray-800 text-gray-300 hover:text-white font-semibold px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap transition cursor-pointer" data-filter="university">Universitárias</button>
+        <button type="button" class="route-filter-btn bg-[#161B22] border border-gray-800 text-gray-300 hover:text-white font-semibold px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap transition cursor-pointer" data-filter="neighborhood">Bairros</button>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- BOTÃO PARA ESCONDER / MOSTRAR TODOS OS HORÁRIOS -->
+        <button id="toggleAllSchedulesBtn" type="button" class="text-xs bg-[#161B22] border border-gray-800 hover:border-[#FFD600] text-gray-300 hover:text-white font-semibold px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center space-x-1.5">
+          <svg class="w-3.5 h-3.5 text-[#FFD600]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span id="toggleAllBtnText">Esconder Todos Horários</span>
+        </button>
+
+        <span class="text-xs text-gray-400 font-medium">Linhas: <strong id="routeCountDisplay" class="text-[#FFD600]">13</strong></span>
+      </div>
+    </div>
+
+    <!-- RECIPIENTE ONDE AS LINHAS SÃO RENDERIZADAS -->
+    <div id="routesContainer" class="space-y-4"></div>
+  </main>
+
+  <!-- DRAWER DO MENU HAMBÚRGUER -->
+  <div id="drawerContainer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+    <div id="drawerBackdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer"></div>
+
+    <aside id="drawerPanel" class="absolute top-0 left-0 bottom-0 w-[82%] max-w-xs sm:max-w-sm bg-[#0D1117] border-r border-gray-800 flex flex-col justify-between p-4 sm:p-5 overflow-y-auto shadow-2xl transition-transform duration-300 -translate-x-full pointer-events-auto">
+      <div class="space-y-5">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+          <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0">
+            <svg class="h-8 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="bus-icon">
+                <rect x="2" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="83" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="8" y="10" width="76" height="76" rx="16" fill="#FFD600"/>
+                <rect x="18" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="60" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="32" y="18" width="28" height="5" rx="2" fill="#121212"/>
+                <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#121212"/>
+                <circle cx="26" cy="68" r="6" fill="#121212"/>
+                <circle cx="66" cy="68" r="6" fill="#121212"/>
+                <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#121212"/>
+              </g>
+              <g id="bus-text" fill="#FFD600">
+                <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+                <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+              </g>
+            </svg>
+          </a>
+
+          <button id="closeMenuBtn" type="button" class="p-2 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition cursor-pointer" aria-label="Fechar Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <a href="03_tela_de_edicao_dados.html" class="bg-[#161B22] border border-gray-800 rounded-2xl p-3 flex items-center space-x-3 hover:border-[#FFD600] transition group">
+          <div id="menuAvatarPreview" class="w-10 h-10 rounded-full border-2 border-[#FFD600] bg-gray-800 flex items-center justify-center overflow-hidden shrink-0">
+            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="overflow-hidden flex-1">
+            <h3 id="menuUserName" class="font-bold text-sm text-white truncate">Usuário</h3>
+            <p id="menuCityDisplay" class="text-[11px] text-gray-400 truncate">Campo Mourão - PR</p>
+          </div>
+          <svg class="w-4 h-4 text-gray-500 group-hover:text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+
+        <!-- NAVEGAÇÃO DO MENU -->
+        <nav class="space-y-1.5">
+          <a href="02_tela_inicial.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span>Início</span>
+          </a>
+
+          <a href="06_mascotes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 2.21-1.34 4.1-3.23 4.71C17.18 12.82 20 15.6 20 19v1H4v-1c0-3.4 2.82-6.18 6.23-7.29C8.34 11.1 7 9.21 7 7a5 5 0 0 1 5-5z"/></svg>
+            <span>Meu bichinho</span>
+          </a>
+
+          <a href="07_historico.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Histórico</span>
+          </a>
+
+          <a href="08_rotas_final.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-black text-sm bg-[#FFD600] text-black shadow-lg transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            <span>Rotas</span>
+          </a>
+
+          <a href="09_carteira.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <span>Carteira</span>
+          </a>
+
+          <a href="meus_pontos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Meus Pontos</span>
+          </a>
+
+          <a href="10_eventos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Eventos</span>
+          </a>
+
+          <a href="03_tela_de_edicao_dados.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Editar Perfil</span>
+          </a>
+
+          <a href="11_configuracoes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Configurações</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="pt-4 border-t border-gray-800 text-center">
+        <p class="text-[11px] text-gray-500 font-medium">BUS WORK App • v2.0</p>
+      </div>
+    </aside>
+  </div>
+
+</body>
+</html>

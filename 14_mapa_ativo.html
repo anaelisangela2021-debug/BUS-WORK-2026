@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUS WORK - Trajeto Ativo & Lotação</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-screen flex flex-col bg-[#090C10] text-white overflow-hidden">
+
+  <!-- CABEÇALHO -->
+  <header class="bg-[#FFD600] text-black px-4 py-2.5 flex items-center justify-between shrink-0 shadow-md z-20">
+    <div class="flex items-center space-x-3">
+      <a href="12_endereco.html" class="p-1 hover:bg-black/10 rounded-lg transition" title="Voltar">
+        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+        </svg>
+      </a>
+      <h1 class="font-black text-base sm:text-lg">Trajeto Ativo</h1>
+    </div>
+    
+    <!-- PONTUAÇÃO DO USUÁRIO NO HEADER -->
+    <div class="bg-black/10 px-3 py-1 rounded-full text-xs font-black flex items-center gap-1.5 text-black">
+      <span>⭐</span>
+      <span id="userPointsDisplay">0 Pts</span>
+    </div>
+  </header>
+
+  <!-- MAPA GOOGLE EMBED -->
+  <main class="flex-1 relative w-full h-full bg-gray-900 flex flex-col justify-between overflow-hidden">
+    <iframe 
+      id="gmapFrame"
+      class="w-full h-full border-0 flex-1"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      src="">
+    </iframe>
+
+    <!-- PAINEL INFERIOR COMPACTO E RETRÁTIL -->
+    <div id="painelInferior" class="absolute bottom-0 left-0 right-0 w-full bg-[#0D1117]/95 border-t border-gray-800 backdrop-blur-md px-4 py-2.5 sm:px-5 sm:py-3 rounded-t-2xl shadow-[0_-8px_20px_rgba(0,0,0,0.6)] z-10 transition-all duration-300">
+      <div class="max-w-2xl mx-auto space-y-2.5">
+        
+        <!-- BARRA SUPERIOR PARA ALTERNAR (OCULTAR / EXPANDIR) -->
+        <button onclick="togglePainel()" class="w-full flex items-center justify-between focus:outline-none group py-0.5">
+          <div class="flex items-center gap-2 text-left">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <p class="text-xs font-bold text-gray-200">
+              Chega em <strong id="txtResumoTempo" class="text-[#FFD600]">6 min</strong> • <span id="txtResumoLotacao" class="text-yellow-400">Moderada 🟡</span>
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-1 text-[11px] font-black text-[#FFD600] bg-gray-800/80 px-2.5 py-1 rounded-full group-hover:bg-[#FFD600] group-hover:text-black transition">
+            <span id="txtBtnToggle">Oc. Painel</span>
+            <span id="icnToggle" class="text-xs">▼</span>
+          </div>
+        </button>
+
+        <!-- CONTEÚDO EXPANDÍVEL DO PAINEL -->
+        <div id="conteudoPainel" class="space-y-2.5 pt-1 transition-all duration-300">
+          
+          <!-- 1. ORIGEM E DESTINO -->
+          <div class="grid grid-cols-2 gap-2 border-t border-gray-800/80 pt-2 text-[11px]">
+            <div class="bg-gray-900/60 p-2 rounded-lg border border-gray-800">
+              <p class="text-[9px] text-[#FFD600] font-bold uppercase">Ponto A (Origem)</p>
+              <p id="txtOrigem" class="text-white truncate font-medium">Carregando...</p>
+            </div>
+            <div class="bg-gray-900/60 p-2 rounded-lg border border-gray-800">
+              <p class="text-[9px] text-[#FFD600] font-bold uppercase">Ponto B (Destino)</p>
+              <p id="txtDestino" class="text-white truncate font-medium">Carregando...</p>
+            </div>
+          </div>
+
+          <!-- 2. STATUS DO ÔNIBUS & GAMIFICAÇÃO EM LINHA COMPACTA -->
+          <div id="enqueteCard" class="bg-gradient-to-r from-yellow-500/10 via-amber-500/5 to-transparent border border-[#FFD600]/30 p-2.5 rounded-xl space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <p class="font-bold text-white flex items-center gap-1 text-[11px]">
+                <span>🚌</span> Como está a lotação agora?
+              </p>
+              <span class="text-[9px] bg-[#FFD600] text-black font-black px-2 py-0.5 rounded-full shadow">
+                +15 Pts
+              </span>
+            </div>
+
+            <!-- Botões de Votação -->
+            <div id="voteButtons" class="grid grid-cols-3 gap-1.5">
+              <button onclick="votarLotacao('Tranquilo')" class="bg-gray-800/90 hover:bg-green-600/30 hover:border-green-500 border border-gray-700 text-[11px] font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                <span>🟢</span> Vazio
+              </button>
+              <button onclick="votarLotacao('Moderado')" class="bg-gray-800/90 hover:bg-yellow-600/30 hover:border-yellow-500 border border-gray-700 text-[11px] font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                <span>🟡</span> Sentado
+              </button>
+              <button onclick="votarLotacao('Lotado')" class="bg-gray-800/90 hover:bg-red-600/30 hover:border-red-500 border border-gray-700 text-[11px] font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                <span>🔴</span> Lotado
+              </button>
+            </div>
+
+            <!-- Mensagem de Agradecimento -->
+            <div id="msgAgradecimento" class="hidden text-center py-1">
+              <p class="text-[11px] font-black text-[#FFD600]">
+                🎉 Obrigado! Você ganhou <strong>+15 pontos</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- 3. BOTÃO EXTERNO GOOGLE MAPS -->
+          <div>
+            <a id="btnAbrirGps" href="#" target="_blank" class="w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black text-xs py-2 px-3 rounded-lg shadow transition text-center flex items-center justify-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              Navegar no App do Google Maps
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let userData = {};
+    let painelAberto = true;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const txtOrigem = document.getElementById('txtOrigem');
+      const txtDestino = document.getElementById('txtDestino');
+      const btnAbrirGps = document.getElementById('btnAbrirGps');
+      const gmapFrame = document.getElementById('gmapFrame');
+
+      // 1. Carrega Dados do Usuário
+      userData = JSON.parse(localStorage.getItem('buswork_user_data') || '{}');
+      if (userData.pontos === undefined) userData.pontos = 0;
+      atualizarPontosTela();
+
+      // 2. Carrega Dados da Rota
+      const rawData = localStorage.getItem('buswork_active_route');
+      if (!rawData) {
+        alert('Nenhum endereço encontrado. Preencha o formulário.');
+        window.location.href = '12_endereco.html';
+        return;
+      }
+
+      const routeData = JSON.parse(rawData);
+
+      let origemQuery = routeData.origem?.textoFormatado || routeData.origem?.rua || 'Campo Mourão, PR';
+      let destinoQuery = routeData.destino?.textoFormatado || routeData.destino?.rua || 'Campo Mourão, PR';
+
+      if (routeData.origem?.isGps && routeData.origem?.lat && routeData.origem?.lon) {
+        origemQuery = `${routeData.origem.lat},${routeData.origem.lon}`;
+      }
+
+      txtOrigem.textContent = routeData.origem?.textoFormatado || origemQuery;
+      txtDestino.textContent = routeData.destino?.textoFormatado || destinoQuery;
+
+      // 3. Monta o Mapa
+      const embedUrl = `https://maps.google.com/maps?saddr=${encodeURIComponent(origemQuery)}&daddr=${encodeURIComponent(destinoQuery)}&output=embed`;
+      gmapFrame.src = embedUrl;
+
+      // 4. Link Externo GPS
+      btnAbrirGps.href = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origemQuery)}&destination=${encodeURIComponent(destinoQuery)}&travelmode=transit`;
+
+      // 5. Tempo de Espera
+      const temposSimulados = [4, 6, 8, 10, 12];
+      const tempoRandom = temposSimulados[Math.floor(Math.random() * temposSimulados.length)];
+      document.getElementById('txtResumoTempo').textContent = `${tempoRandom} min`;
+    });
+
+    // Função de Alternar Visualização do Painel
+    function togglePainel() {
+      const conteudo = document.getElementById('conteudoPainel');
+      const txtBtnToggle = document.getElementById('txtBtnToggle');
+      const icnToggle = document.getElementById('icnToggle');
+
+      if (painelAberto) {
+        conteudo.classList.add('hidden');
+        txtBtnToggle.textContent = 'Ver Detalhes';
+        icnToggle.textContent = '▲';
+        painelAberto = false;
+      } else {
+        conteudo.classList.remove('hidden');
+        txtBtnToggle.textContent = 'Oc. Painel';
+        icnToggle.textContent = '▼';
+        painelAberto = true;
+      }
+    }
+
+    function atualizarPontosTela() {
+      const display = document.getElementById('userPointsDisplay');
+      if (display) display.textContent = `${userData.pontos || 0} Pts`;
+    }
+
+    function votarLotacao(nivel) {
+      const voteButtons = document.getElementById('voteButtons');
+      const msgAgradecimento = document.getElementById('msgAgradecimento');
+      const txtResumoLotacao = document.getElementById('txtResumoLotacao');
+
+      if (nivel === 'Tranquilo') {
+        txtResumoLotacao.textContent = 'Tranquila 🟢';
+        txtResumoLotacao.className = 'text-green-400';
+      } else if (nivel === 'Moderado') {
+        txtResumoLotacao.textContent = 'Moderada 🟡';
+        txtResumoLotacao.className = 'text-yellow-400';
+      } else if (nivel === 'Lotado') {
+        txtResumoLotacao.textContent = 'Lotada 🔴';
+        txtResumoLotacao.className = 'text-red-400';
+      }
+
+      userData.pontos = (userData.pontos || 0) + 15;
+      localStorage.setItem('buswork_user_data', JSON.stringify(userData));
+      atualizarPontosTela();
+
+      voteButtons.classList.add('hidden');
+      msgAgradecimento.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

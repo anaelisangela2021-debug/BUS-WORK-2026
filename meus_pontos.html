@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUS WORK - Meus Pontos</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Script JavaScript -->
+  <script src="meus_pontos.js" defer></script>
+</head>
+<body class="min-h-screen flex flex-col bg-[#090C10] text-white relative font-sans">
+
+  <!-- CABEÇALHO PADRONIZADO -->
+  <header class="bg-[#FFD600] text-black px-3 lg:px-6 py-2.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+    <div class="flex items-center space-x-2 sm:space-x-4">
+      <button id="openMenuBtn" type="button" class="p-1.5 hover:bg-black/10 rounded-lg focus:outline-none transition cursor-pointer" aria-label="Abrir Menu">
+        <svg class="w-7 h-7 text-black" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+      </button>
+
+      <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0" aria-label="BUS WORK Home">
+        <svg class="h-8 sm:h-10 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="bus-icon">
+            <rect x="2" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="83" y="36" width="7" height="18" rx="3" fill="#121212"/>
+            <rect x="8" y="10" width="76" height="76" rx="16" fill="#121212"/>
+            <rect x="18" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="60" y="84" width="14" height="7" rx="3" fill="#121212"/>
+            <rect x="32" y="18" width="28" height="5" rx="2" fill="#FFD600"/>
+            <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#FFD600"/>
+            <circle cx="26" cy="68" r="6" fill="#FFD600"/>
+            <circle cx="66" cy="68" r="6" fill="#FFD600"/>
+            <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#FFD600"/>
+          </g>
+          <g id="bus-text" fill="#121212">
+            <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+            <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+          </g>
+        </svg>
+      </a>
+
+      <a href="03_tela_de_edicao_dados.html" class="flex items-center space-x-2 border-l border-black/20 pl-2 sm:pl-4 hover:opacity-80 transition">
+        <div id="userAvatarContainer" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-black bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+          <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div class="hidden sm:block">
+          <h2 id="userNameDisplay" class="font-bold text-xs sm:text-sm leading-tight text-black">Usuário</h2>
+          <p class="text-[10px] font-medium text-black/80">Ver Perfil</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <div id="cityContainer" class="flex items-center bg-black/10 px-2.5 py-1.5 rounded-full text-xs font-semibold text-black max-w-[120px] sm:max-w-none truncate">
+        <svg class="w-4 h-4 mr-1 shrink-0 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="userCityDisplay" class="truncate">Campo Mourão</span>
+      </div>
+      
+      <a href="04_sininho.html" class="relative p-2 hover:bg-black/10 rounded-full transition shrink-0" aria-label="Notificações">
+        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 rounded-full animate-pulse"></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-1 p-4 lg:p-6 space-y-6 max-w-5xl mx-auto w-full">
+
+    <!-- CARTÃO DE SALDO DE PONTOS -->
+    <div class="bg-gradient-to-br from-[#161B22] to-[#0D1117] border border-gray-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-[#FFD600]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <div class="flex items-center space-x-2 text-xs text-gray-400 font-semibold uppercase tracking-wider">
+            <svg class="w-4 h-4 text-[#FFD600]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Programa BUS WORK Fidelidade</span>
+          </div>
+          <div class="flex items-baseline space-x-3">
+            <span id="userPointsDisplay" class="text-4xl sm:text-5xl font-black text-[#FFD600]">320</span>
+            <span class="text-lg sm:text-xl font-bold text-gray-300">Pontos Acumulados</span>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-400">
+            Troque seus pontos por sorvetes, chocolates, passagens grátis e cupons de desconto!
+          </p>
+        </div>
+
+        <a href="#rewardsSection" class="flex items-center justify-center space-x-2 bg-[#FFD600] text-black font-black px-6 py-3.5 rounded-2xl hover:bg-yellow-400 transition shadow-lg text-xs sm:text-sm shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+          <span>Resgatar Recompensas</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- SEÇÃO COMO GANHAR PONTOS -->
+    <section class="bg-[#161B22] border border-gray-800 rounded-3xl p-5 sm:p-7 shadow-xl space-y-5">
+      <div class="border-b border-gray-800 pb-4">
+        <h2 class="text-lg sm:text-xl font-black text-white flex items-center space-x-2">
+          <span class="p-2 bg-[#FFD600] text-black rounded-xl">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </span>
+          <span>Como Ganhar Pontos?</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 mt-1">Ganhe pontos colaborando com informações do transporte ou participando de eventos parceiros!</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- CARD 1: AVALIAR LOTAÇÃO AO INICIAR TRAJETO (ÚNICA FORMA DE PONTUAR EM VIAGEM ROTINEIRA) -->
+        <div class="bg-[#0D1117] border border-gray-800 rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-gray-700 transition">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="bg-amber-500/10 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-500/20">Viagem Comum</span>
+              <span class="text-base font-black text-[#FFD600]">+20 PTS</span>
+            </div>
+            <h3 class="font-bold text-sm text-white">Informar Lotação do Ônibus</h3>
+            <p class="text-xs text-gray-400">Ao iniciar um trajeto comum, responda se o ônibus está vazio, moderado ou cheio. Viagens rotineiras só pontuam se você responder à lotação.</p>
+          </div>
+          <button id="openStartTripModalBtn" type="button" class="w-full bg-[#FFD600] hover:bg-yellow-400 text-black font-black py-3 rounded-xl text-xs sm:text-sm transition cursor-pointer flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Iniciar Trajeto e Informar Lotação (+20 PTS)</span>
+          </button>
+        </div>
+
+        <!-- CARD 2: PARTICIPAÇÃO EM EVENTO -->
+        <div class="bg-[#0D1117] border border-gray-800 rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-gray-700 transition">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="bg-emerald-500/10 text-emerald-400 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-emerald-500/20">Viagem de Evento</span>
+              <span class="text-base font-black text-emerald-400">+100 PTS</span>
+            </div>
+            <h3 class="font-bold text-sm text-white">Participar de Evento Cadastrado</h3>
+            <p class="text-xs text-gray-400">Viagens destinadas a eventos parceiros geram pontuação! Envie a foto de comprovação da sua presença no evento para liberar os pontos.</p>
+          </div>
+          <button id="openPhotoProofBtn" type="button" class="w-full bg-emerald-500 text-black font-black py-3 rounded-xl text-xs sm:text-sm hover:bg-emerald-400 transition cursor-pointer flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>Comprovar Presença em Evento (+100 PTS)</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SEÇÃO DE CATÁLOGO / TROCA DE RECOMPENSAS -->
+    <section id="rewardsSection" class="bg-[#161B22] border border-gray-800 rounded-3xl p-5 sm:p-7 shadow-xl space-y-6">
+      <div class="border-b border-gray-800 pb-4">
+        <h2 class="text-lg sm:text-xl font-black text-white flex items-center space-x-2">
+          <span class="p-2 bg-[#FFD600] text-black rounded-xl">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+          </span>
+          <span>Trocar Pontos por Recompensas</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 mt-1">Resgate vouchers, produtos de parceiros locais e passagens digitais.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- ITEM 1: PASSAGEM DE ÔNIBUS -->
+        <div class="bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#FFD600]/50 transition group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80" alt="Passagem de Ônibus" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 bg-[#FFD600] text-black text-[10px] font-black px-2.5 py-1 rounded-lg shadow">TRANSPORTE</span>
+          </div>
+
+          <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-sm text-white">1 Passagem de Ônibus Grátis</h3>
+              <p class="text-xs text-gray-400 mt-1">Adiciona +1 passagem diretamente no saldo da sua Carteira Digital BUS WORK.</p>
+            </div>
+            <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
+              <span class="text-sm font-black text-[#FFD600]">150 PTS</span>
+              <button type="button" class="redeem-btn bg-[#FFD600] hover:bg-yellow-400 text-black font-bold px-3.5 py-2 rounded-xl text-xs transition cursor-pointer" data-id="ticket" data-cost="150" data-name="1 Passagem de Ônibus">
+                Resgatar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 2: SORVETE (LINK CORRIGIDO) -->
+        <div class="bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-pink-500/50 transition group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=600&q=80" alt="Casquinha de Sorvete" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 bg-pink-500 text-white text-[10px] font-black px-2.5 py-1 rounded-lg shadow">SORVETERIA</span>
+          </div>
+
+          <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-sm text-white">Casquinha Dupla de Sorvete</h3>
+              <p class="text-xs text-gray-400 mt-1">Voucher válido para 1 casquinha de 2 sabores nas sorveterias parceiras da cidade.</p>
+            </div>
+            <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
+              <span class="text-sm font-black text-pink-400">120 PTS</span>
+              <button type="button" class="redeem-btn bg-[#FFD600] hover:bg-yellow-400 text-black font-bold px-3.5 py-2 rounded-xl text-xs transition cursor-pointer" data-id="icecream" data-cost="120" data-name="1 Casquinha de Sorvete">
+                Resgatar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 3: CHOCOLATE -->
+        <div class="bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-amber-600/50 transition group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Chocolate Artesanal" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 bg-amber-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg shadow">DOCERIA</span>
+          </div>
+
+          <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-sm text-white">Barra de Chocolate Artesanal (100g)</h3>
+              <p class="text-xs text-gray-400 mt-1">Retire 1 barra de chocolate ao leite ou meio amargo nas lojas credenciadas.</p>
+            </div>
+            <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
+              <span class="text-sm font-black text-amber-500">180 PTS</span>
+              <button type="button" class="redeem-btn bg-[#FFD600] hover:bg-yellow-400 text-black font-bold px-3.5 py-2 rounded-xl text-xs transition cursor-pointer" data-id="chocolate" data-cost="180" data-name="Barra de Chocolate">
+                Resgatar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 4: CUPOM LANCHONETE -->
+        <div class="bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-emerald-500/50 transition group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Combo Lanche" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 bg-emerald-500 text-black text-[10px] font-black px-2.5 py-1 rounded-lg shadow">LANCHONETES</span>
+          </div>
+
+          <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-sm text-white">Cupom 20% OFF em Lanches</h3>
+              <p class="text-xs text-gray-400 mt-1">Válido em qualquer combo em lanchonetes e hamburguerias parceiras.</p>
+            </div>
+            <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
+              <span class="text-sm font-black text-emerald-400">100 PTS</span>
+              <button type="button" class="redeem-btn bg-[#FFD600] hover:bg-yellow-400 text-black font-bold px-3.5 py-2 rounded-xl text-xs transition cursor-pointer" data-id="food_discount" data-cost="100" data-name="Cupom 20% OFF em Lanches">
+                Resgatar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 5: REFRIGERANTE OU SUCO -->
+        <div class="bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-cyan-500/50 transition group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Bebida Gelada" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 bg-cyan-500 text-black text-[10px] font-black px-2.5 py-1 rounded-lg shadow">CONVENIÊNCIA</span>
+          </div>
+
+          <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-sm text-white">1 Suco Natural ou Refrigerante Lata</h3>
+              <p class="text-xs text-gray-400 mt-1">Retire 1 lata gelada em lanchonetes de terminais e estabelecimentos parceiros.</p>
+            </div>
+            <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
+              <span class="text-sm font-black text-cyan-400">80 PTS</span>
+              <button type="button" class="redeem-btn bg-[#FFD600] hover:bg-yellow-400 text-black font-bold px-3.5 py-2 rounded-xl text-xs transition cursor-pointer" data-id="drink" data-cost="80" data-name="Suco Natural/Refrigerante">
+                Resgatar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 6: PACOTE DE 3 PASSAGENS -->
+        <div class="bg-[#0D1117] border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-purple-500/50 transition group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=600&q=80" alt="Combo 3 Passagens" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent"></div>
+            <span class="absolute top-3 left-3 bg-purple-500 text-white text-[10px] font-black px-2.5 py-1 rounded-lg shadow">PACOTE ESPECIAL</span>
+          </div>
+
+          <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-sm text-white">Combo 3 Passagens de Ônibus</h3>
+              <p class="text-xs text-gray-400 mt-1">Super pacote econômico! Adiciona +3 passagens digitais no seu aplicativo.</p>
+            </div>
+            <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
+              <span class="text-sm font-black text-purple-400">380 PTS</span>
+              <button type="button" class="redeem-btn bg-[#FFD600] hover:bg-yellow-400 text-black font-bold px-3.5 py-2 rounded-xl text-xs transition cursor-pointer" data-id="ticket_pack" data-cost="380" data-name="Combo 3 Passagens">
+                Resgatar
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HISTÓRICO DE PONTOS -->
+    <section class="bg-[#161B22] border border-gray-800 rounded-3xl p-5 sm:p-6 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+        <h3 class="font-bold text-sm sm:text-base text-white flex items-center space-x-2">
+          <svg class="w-5 h-5 text-[#FFD600]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Extrato de Pontos</span>
+        </h3>
+      </div>
+
+      <div id="pointsHistoryList" class="space-y-2.5">
+        <!-- Histórico gerado dinamicamente via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: INICIAR TRAJETO E AVALIAR LOTAÇÃO (APENAS A RESPOSTA DA LOTAÇÃO GERA +20 PTS) -->
+  <div id="startTripModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="bg-[#161B22] border border-gray-800 rounded-3xl p-6 max-w-md w-full space-y-5 shadow-2xl relative">
+      <button id="closeStartTripModalBtn" type="button" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white rounded-xl">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div class="text-center space-y-1">
+        <div class="inline-flex p-3 bg-[#FFD600]/10 text-[#FFD600] rounded-2xl mb-1">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 6v6M16 6v6M2 12h20M4 18h16M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <h3 class="text-lg font-black text-white">Iniciar Trajeto Rotineiro</h3>
+        <p class="text-xs text-gray-400">Viagens normais não geram pontos por deslocamento, mas você ganha <strong class="text-[#FFD600]">+20 PTS</strong> ao responder à lotação do ônibus!</p>
+      </div>
+
+      <!-- SELEÇÃO DA LOTAÇÃO DO ÔNIBUS -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider text-center">Como está a lotação do ônibus agora?</label>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" class="occupancy-select-btn bg-[#0D1117] border-2 border-gray-800 hover:border-emerald-500 text-gray-300 font-bold p-3 rounded-2xl text-xs text-center transition flex flex-col items-center space-y-1" data-status="Vazio">
+            <span class="text-lg">🟢</span>
+            <span>Vazio</span>
+          </button>
+          <button type="button" class="occupancy-select-btn bg-[#0D1117] border-2 border-gray-800 hover:border-amber-500 text-gray-300 font-bold p-3 rounded-2xl text-xs text-center transition flex flex-col items-center space-y-1" data-status="Moderado">
+            <span class="text-lg">🟡</span>
+            <span>Moderado</span>
+          </button>
+          <button type="button" class="occupancy-select-btn bg-[#0D1117] border-2 border-gray-800 hover:border-red-500 text-gray-300 font-bold p-3 rounded-2xl text-xs text-center transition flex flex-col items-center space-y-1" data-status="Cheio">
+            <span class="text-lg">🔴</span>
+            <span>Cheio</span>
+          </button>
+        </div>
+      </div>
+
+      <button id="confirmTripStartBtn" type="button" disabled class="w-full bg-gray-700 text-gray-400 font-black py-3.5 rounded-2xl transition cursor-not-allowed text-xs sm:text-sm">
+        Selecione a lotação para ganhar +20 PTS
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: COMPROVAÇÃO DE PRESENÇA EM EVENTO -->
+  <div id="photoProofModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="bg-[#161B22] border border-gray-800 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl relative">
+      <button id="closePhotoModalBtn" type="button" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white rounded-xl">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div class="text-center space-y-1">
+        <h3 class="text-lg font-black text-white">Comprovar Evento Cadastrado</h3>
+        <p class="text-xs text-gray-400">Envie uma foto confirmando sua presença no evento para resgatar seus <strong class="text-emerald-400">+100 PTS</strong> da viagem!</p>
+      </div>
+
+      <div id="uploadBox" class="border-2 border-dashed border-gray-700 hover:border-[#FFD600] rounded-2xl p-6 text-center space-y-3 cursor-pointer bg-[#0D1117] transition">
+        <div class="p-3 bg-[#FFD600]/10 text-[#FFD600] rounded-2xl inline-block">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <div>
+          <span class="block text-xs font-bold text-white">Clique para anexar foto do evento</span>
+          <span class="text-[10px] text-gray-500">Formatos aceitos: JPG, PNG</span>
+        </div>
+        <input type="file" id="photoFileInput" accept="image/*" class="hidden">
+      </div>
+
+      <div id="photoPreviewContainer" class="hidden space-y-2">
+        <img id="photoPreviewImg" src="" alt="Pré-visualização" class="w-full h-40 object-cover rounded-xl border border-gray-700">
+        <span class="block text-center text-xs text-emerald-400 font-bold">✓ Foto selecionada com sucesso!</span>
+      </div>
+
+      <button id="submitPhotoProofBtn" type="button" disabled class="w-full bg-gray-700 text-gray-400 font-black py-3 rounded-xl transition cursor-not-allowed text-xs sm:text-sm">
+        Confirmar Evento e Resgatar +100 PTS
+      </button>
+    </div>
+  </div>
+
+  <!-- DRAWER DO MENU HAMBÚRGUER -->
+  <div id="drawerContainer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+    <div id="drawerBackdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer"></div>
+
+    <aside id="drawerPanel" class="absolute top-0 left-0 bottom-0 w-[82%] max-w-xs sm:max-w-sm bg-[#0D1117] border-r border-gray-800 flex flex-col justify-between p-4 sm:p-5 overflow-y-auto shadow-2xl transition-transform duration-300 -translate-x-full pointer-events-auto">
+      <div class="space-y-5">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+          <a href="02_tela_inicial.html" class="flex items-center focus:outline-none shrink-0">
+            <svg class="h-8 w-auto" viewBox="0 0 310 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="bus-icon">
+                <rect x="2" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="83" y="36" width="7" height="18" rx="3" fill="#FFD600"/>
+                <rect x="8" y="10" width="76" height="76" rx="16" fill="#FFD600"/>
+                <rect x="18" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="60" y="84" width="14" height="7" rx="3" fill="#FFD600"/>
+                <rect x="32" y="18" width="28" height="5" rx="2" fill="#121212"/>
+                <path d="M 18 30 H 74 V 48 C 74 53 70 56 64 56 H 28 C 22 56 18 53 18 48 Z" fill="#121212"/>
+                <circle cx="26" cy="68" r="6" fill="#121212"/>
+                <circle cx="66" cy="68" r="6" fill="#121212"/>
+                <rect x="38" y="67" width="16" height="3.5" rx="1.5" fill="#121212"/>
+              </g>
+              <g id="bus-text" fill="#FFD600">
+                <text x="100" y="44" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BUS</text>
+                <text x="100" y="84" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="42" letter-spacing="-1">WORK</text>
+              </g>
+            </svg>
+          </a>
+
+          <button id="closeMenuBtn" type="button" class="p-2 hover:bg-gray-800 text-gray-400 hover:text-white rounded-xl transition cursor-pointer" aria-label="Fechar Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <a href="03_tela_de_edicao_dados.html" class="bg-[#161B22] border border-gray-800 rounded-2xl p-3 flex items-center space-x-3 hover:border-[#FFD600] transition group">
+          <div id="menuAvatarPreview" class="w-10 h-10 rounded-full border-2 border-[#FFD600] bg-gray-800 flex items-center justify-center overflow-hidden shrink-0">
+            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="overflow-hidden flex-1">
+            <h3 id="menuUserName" class="font-bold text-sm text-white truncate">Usuário</h3>
+            <p id="menuCityDisplay" class="text-[11px] text-gray-400 truncate">Campo Mourão - PR</p>
+          </div>
+          <svg class="w-4 h-4 text-gray-500 group-hover:text-[#FFD600] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+
+        <!-- NAVEGAÇÃO -->
+        <nav class="space-y-1.5">
+          <a href="02_tela_inicial.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span>Início</span>
+          </a>
+
+          <a href="06_mascotes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 2.21-1.34 4.1-3.23 4.71C17.18 12.82 20 15.6 20 19v1H4v-1c0-3.4 2.82-6.18 6.23-7.29C8.34 11.1 7 9.21 7 7a5 5 0 0 1 5-5z"/></svg>
+            <span>Meu bichinho</span>
+          </a>
+
+          <a href="07_historico.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Histórico</span>
+          </a>
+
+          <a href="08_rotas_final.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            <span>Rotas</span>
+          </a>
+
+          <a href="09_carteira.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <span>Carteira</span>
+          </a>
+
+          <a href="meus_pontos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-black text-sm bg-[#FFD600] text-black shadow-lg transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Meus Pontos</span>
+          </a>
+
+          <a href="10_eventos.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Eventos</span>
+          </a>
+
+          <a href="03_tela_de_edicao_dados.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Editar Perfil</span>
+          </a>
+
+          <a href="11_configuracoes.html" class="menu-option flex items-center px-3.5 py-3 rounded-xl font-bold text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition">
+            <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Configurações</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="pt-4 border-t border-gray-800 text-center">
+        <p class="text-[11px] text-gray-500 font-medium">BUS WORK App • v2.0</p>
+      </div>
+    </aside>
+  </div>
+
+</body>
+</html>
